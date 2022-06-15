@@ -1,23 +1,18 @@
-import logo from './logo.svg';
+import useFetch from './useFetch';
 import './App.css';
 
 function App() {
+  const { isLoading, serverError, apiData } = useFetch('GET', 'https://pokeapi.co/api/v2/pokemon/');
+  console.log(apiData);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <h2>API data</h2>
+      {isLoading && <span>Loading.....</span>}
+      {!isLoading && serverError ? (
+        <span>Error in fetching data ...</span>
+      ) : (
+        <span>{JSON.stringify(apiData)}</span>
+      )}
     </div>
   );
 }
